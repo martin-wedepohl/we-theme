@@ -90,6 +90,15 @@ class Component implements Component_Interface {
 			'no-lazyload' => __( 'Lazy-load off', 'wp-rig' ),
 		];
 
+		$wp_customize->add_section(
+			'lazy_load',
+			[
+				'priority' => 10,
+				'title'    => __( 'Lazy Load Options', 'wp-rig' ),
+				'panel'    => 'theme_options',
+			]
+		);
+
 		$wp_customize->add_setting(
 			'lazy_load_media',
 			[
@@ -109,7 +118,7 @@ class Component implements Component_Interface {
 			'lazy_load_media',
 			[
 				'label'           => __( 'Lazy-load images', 'wp-rig' ),
-				'section'         => 'theme_options',
+				'section'         => 'lazy_load',
 				'type'            => 'radio',
 				'description'     => __( 'Lazy-loading images means images are loaded only when they are in view. Improves performance, but can result in content jumping around on slower connections.', 'wp-rig' ),
 				'choices'         => $lazyload_choices,

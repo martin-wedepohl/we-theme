@@ -18,7 +18,24 @@ function wp_rig() : Template_Tags {
 	static $theme = null;
 
 	if ( null === $theme ) {
-		$theme = new Theme();
+		$theme = new Theme(
+			[
+				new Localization\Component(),
+				new Base_Support\Component(),
+				new Editor\Component(),
+				new Accessibility\Component(),
+				new Image_Sizes\Component(),
+				new Lazyload\Component(),
+				new AMP\Component(),
+				new PWA\Component(),
+				new Nav_Menus\Component(),
+				new Sidebars\Component(),
+				new Custom_Logo\Component(),
+				new Post_Thumbnails\Component(),
+				new Customizer\Component(),
+				new Styles\Component(),
+			]
+		);
 		$theme->initialize();
 	}
 
