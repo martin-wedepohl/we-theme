@@ -1,1 +1,44 @@
-{}
+{
+	"theme": {
+		"slug": "we-theme",
+		"name": "Wedepohl Engineering Theme",
+		"author": "Martin Wedepohl",
+		"PHPNamespace": "WE_Theme\\WE_Theme"
+	},
+	"dev": {
+		"browserSync": {
+			"live": true,
+			"proxyURL": "we-rig.local",
+			"bypassPort": "8181",
+			"https": false
+		},
+		"styles": {
+			"stage": 3,
+			"autoprefixer": {
+				"grid": false
+			},
+			"importFrom": [
+				"_custom-media.css"
+			],
+			"features": {
+				"custom-media-queries": true,
+				"custom-properties": true,
+				"nesting-rules": true
+			}
+		},
+		"debug": {
+			"styles": false,
+			"scripts": false,
+			"phpcs": true
+		}
+	},
+	"export": {
+		"compress": true,
+		"generatePotFile": true,
+		"filesToCopy": [
+			"LICENSE",
+			"readme.txt",
+			"screenshot.png"
+		]
+	}
+}
