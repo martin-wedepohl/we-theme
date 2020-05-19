@@ -28,6 +28,8 @@ function wp_rig() : Template_Tags {
 				new Lazyload\Component(),
 				new AMP\Component(),
 				new PWA\Component(),
+				new Scroll_To_Top\Component(),
+				new Top_Bar\Component(),
 				new Nav_Menus\Component(),
 				new Sidebars\Component(),
 				new Custom_Logo\Component(),

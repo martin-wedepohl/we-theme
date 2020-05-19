@@ -1,0 +1,27 @@
+:root {
+	--bottom-loc: 20px;
+	--right-loc: 20px;
+}
+
+#back-to-top {
+	display: none;
+	position: fixed;
+	height: 30px;
+	width: 30px;
+	bottom: var(--bottom-loc);
+	right: var(--right-loc);
+	z-index: 10;
+	border: 2px solid #000;
+	border-radius: 100%;
+	text-align: center;
+	opacity: 0.1;
+
+	& > a {
+		text-decoration: none;
+		color: #000;
+	}
+}
+
+#back-to-top:hover {
+	opacity: 0.3;
+}
