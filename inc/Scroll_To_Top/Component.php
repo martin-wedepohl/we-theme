@@ -10,8 +10,9 @@ namespace WP_Rig\WP_Rig\Scroll_To_Top;
 use WP_Rig\WP_Rig\Component_Interface;
 use function WP_Rig\WP_Rig\wp_rig;
 use \WP_Customize_Manager;
-use function \add_action;
+use function \esc_attr;
 use function \is_admin;
+use function \add_action;
 use function \get_theme_mod;
 use function \wp_enqueue_script;
 use function \get_theme_file_uri;
@@ -21,8 +22,6 @@ use function \get_theme_file_path;
  * Class for managing scroll to top functionality.
  */
 class Component implements Component_Interface {
-
-	private const DEFAULT_ICON = 'arrow-up';
 
 	/**
 	 * Gets the unique identifier for the theme component.
@@ -55,7 +54,7 @@ class Component implements Component_Interface {
 			return;
 		}
 
-		// Enqueue the assets
+		// Enqueue the assets.
 		add_action( 'wp_enqueue_scripts', [ $this, 'action_enqueue_assets' ] );
 
 		// Add the anchor to the top of the page.
@@ -81,10 +80,11 @@ class Component implements Component_Interface {
 			wp_rig()->get_asset_version( get_theme_file_path( '/assets/js/scroll-to-top.min.js' ) ),
 			false
 		);
+
 		// Defer javascript to end of DOM.
 		wp_script_add_data( 'wp-rig-scroll-to-top-script', 'defer', true );
 
-		// Localize the script
+		// Localize the script.
 		$bottom = get_theme_mod( 'scroll-to-top-bottom', 20 ) . 'px';
 		$right  = get_theme_mod( 'scroll-to-top-right', 20 ) . 'px';
 		$scroll = get_theme_mod( 'scroll-to-top-scroll-len', 20 );
@@ -106,15 +106,6 @@ class Component implements Component_Interface {
 		$scroll_to_top_choices = [
 			'scroll-to-top'    => __( 'Scroll to top on (default)', 'wp-rig' ),
 			'no-scroll-to-top' => __( 'Scroll to top off', 'wp-rig' ),
-		];
-
-		$icon_choices = [
-			'arrow-up'        => __( 'arrow up (default)', 'wp-rig' ),
-			'chevron-up'      => __( 'chevron up', 'wp-rig' ),
-			'angle-up'        => __( 'angle up', 'wp-rig' ),
-			'angle-double-up' => __( 'double angle up', 'wp-rig' ),
-			'caret-up'        => __( 'caret up', 'wp-rig' ),
-			'hand-o-up'       => __( 'hand up', 'wp-rig' ),
 		];
 
 		$wp_customize->add_section(
@@ -143,17 +134,11 @@ class Component implements Component_Interface {
 
 		$wp_customize->add_setting(
 			'scroll-to-top-icon',
-			[
-				'default'           => self::DEFAULT_ICON,
+			array(
+				'default'           => 'arrow-up',
 				'transport'         => 'postMessage',
-				'sanitize_callback' => function( $input ) use ( $icon_choices ) : string {
-					if ( array_key_exists( $input, $icon_choices ) ) {
-						return $input;
-					}
-
-					return '';
-				},
-			]
+				'sanitize_callback' => 'sanitize_text_field',
+			)
 		);
 
 		$wp_customize->add_setting(
@@ -161,9 +146,7 @@ class Component implements Component_Interface {
 			[
 				'default'           => 20,
 				'transport'         => 'postMessage',
-				'sanitize_callback' => function( $input ) {
-					return intval( $input );
-				},
+				'sanitize_callback' => 'sanitize_text_field',
 			]
 		);
 
@@ -172,9 +155,7 @@ class Component implements Component_Interface {
 			[
 				'default'           => 20,
 				'transport'         => 'postMessage',
-				'sanitize_callback' => function( $input ) {
-					return intval( $input );
-				},
+				'sanitize_callback' => 'sanitize_text_field',
 			]
 		);
 
@@ -183,9 +164,7 @@ class Component implements Component_Interface {
 			[
 				'default'           => 20,
 				'transport'         => 'postMessage',
-				'sanitize_callback' => function( $input ) {
-					return intval( $input );
-				},
+				'sanitize_callback' => 'sanitize_text_field',
 			]
 		);
 
@@ -201,14 +180,23 @@ class Component implements Component_Interface {
 		);
 
 		$wp_customize->add_control(
-			'scroll-to-top-icon',
-			[
-				'label'           => __( 'Select icon to use', 'wp-rig' ),
-				'section'         => 'scroll_to_top',
-				'type'            => 'radio',
-				'description'     => __( 'Select the icon that is used at the bottom of the page.', 'wp-rig' ),
-				'choices'         => $icon_choices,
-			]
+			new Icon_Select(
+				$wp_customize,
+				'scroll-to-top-icon',
+				array(
+					'label'       => __( 'Select icon to use' ),
+					'description' => __( 'Select the icon that is used at the bottom of the page.', 'wp-rig' ),
+					'section'     => 'scroll_to_top',
+					'choices'     => [
+						'arrow-up'        => __( 'Arrow - default', 'wp-rig' ),
+						'chevron-up'      => __( 'Chevron', 'wp-rig' ),
+						'angle-up'        => __( 'Angle', 'wp-rig' ),
+						'angle-double-up' => __( 'Double Angle', 'wp-rig' ),
+						'caret-up'        => __( 'Caret', 'wp-rig' ),
+						'hand-o-up'       => __( 'Hand', 'wp-rig' ),
+					],
+				)
+			)
 		);
 
 		$wp_customize->add_control(
@@ -219,7 +207,7 @@ class Component implements Component_Interface {
 				'type'            => 'number',
 				'description'     => __( 'Number of pixels to scroll before the scroll to top icon appears.', 'wp-rig' ),
 				'input_attrs'     => [
-					'min'  => 0,
+					'min'  => 1,
 					'max'  => 1000,
 					'step' => 1,
 				],
@@ -244,24 +232,25 @@ class Component implements Component_Interface {
 		$wp_customize->add_control(
 			'scroll-to-top-right',
 			[
-				'label'           => __( 'Icon right', 'wp-rig' ),
-				'section'         => 'scroll_to_top',
-				'type'            => 'number',
-				'description'     => __( 'Number of pixels the icon is from the right of the screen.', 'wp-rig' ),
-				'input_attrs'     => [
+				'label'       => __( 'Icon right', 'wp-rig' ),
+				'section'     => 'scroll_to_top',
+				'type'        => 'number',
+				'description' => __( 'Number of pixels the icon is from the right of the screen.', 'wp-rig' ),
+				'input_attrs' => [
 					'min'  => 0,
 					'max'  => 1000,
 					'step' => 1,
 				],
 			]
 		);
+
 	}
 
 	/**
 	 * Add the anchor that is used to scroll to the top of the page
 	 */
 	public function add_anchor_to_body() {
-		$icon = get_theme_mod( 'scroll-to-top-icon', self::DEFAULT_ICON );
+		$icon = get_theme_mod( 'scroll-to-top-icon', 'arrow-up' );
 		echo '<a id="top-of-page" aria-hidden="true"></a>';
 		echo '<div id="back-to-top" title="Go to the top of the page" aria-hidden="true"><a href="#top-of-page"><i class="fa fa-' . esc_attr( $icon ) . '" ></i></a></div>';
 	}
