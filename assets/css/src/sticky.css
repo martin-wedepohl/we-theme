@@ -1,0 +1,33 @@
+/*--------------------------------------------------------------
+# Sticky Headers
+--------------------------------------------------------------*/
+
+@media only screen and (min-width: 601px) and (max-width: 782px) {
+	.sticky-header.stick-mobile {
+		position: sticky;
+		width: 100vw;
+		z-index: 100;
+		background: #fff;
+		top: 0;
+	}
+
+	.admin-bar .sticky-header.stick-mobile {
+		top: 46px;
+	}
+
+}
+
+@media only screen and (min-width: 783px) {
+	.sticky-header {
+		position: sticky;
+		width: 100vw;
+		z-index: 100;
+		background: #fff;
+		top: 0;
+	}
+
+	.admin-bar .sticky-header {
+		top: 32px;
+	}
+
+}
