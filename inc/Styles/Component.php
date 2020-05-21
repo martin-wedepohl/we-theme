@@ -289,7 +289,12 @@ class Component implements Component_Interface, Templating_Component_Interface {
 			],
 			'wp-rig-content'    => [
 				'file'             => 'content.min.css',
-				'preload_callback' => '__return_true',
+				'preload_callback' => function() {
+					if ( is_home() ) {
+						return true;
+					}
+					return false;
+				},
 			],
 			'wp-rig-sidebar'    => [
 				'file'             => 'sidebar.min.css',

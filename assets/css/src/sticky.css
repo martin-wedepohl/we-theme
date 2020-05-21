@@ -20,7 +20,7 @@
 @media only screen and (min-width: 783px) {
 	.sticky-header {
 		position: sticky;
-		width: 100vw;
+		width: 100%;
 		z-index: 100;
 		background: #fff;
 		top: 0;

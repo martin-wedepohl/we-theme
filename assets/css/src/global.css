@@ -200,7 +200,11 @@ select {
 --------------------------------------------------------------*/
 
 .site-header {
-	padding-bottom: 1em;
+	border-bottom: 1px solid var(--color-header-footer-border);
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-content: center;
 }
 
 .header-image {
@@ -219,7 +223,7 @@ select {
 
 .site-branding {
 	text-align: center;
-	padding: 60px 0 1.75em;
+	margin: 1em;
 }
 
 .site-title {
@@ -253,8 +257,8 @@ select {
 --------------------------------------------------------------*/
 .nav--toggle-small .menu-toggle {
 	display: block;
-	margin: 1.2em auto;
-	padding: 0.6em 1.2em 0.5em;
+	margin: 0 auto;
+	padding: 0.5em 1.2em 0.5em;
 	font-family: var(--highlight-font-family);
 	font-stretch: condensed;
 	font-size: 80%;
@@ -299,6 +303,7 @@ select {
 		margin-left: 0;
 		box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
 		z-index: 1;
+		padding-left: 1em;
 	}
 
 	.nav--toggle-sub .dropdown,
@@ -384,8 +389,7 @@ select {
 .main-navigation {
 	clear: both;
 	display: block;
-	margin: 0 auto 2em;
-	padding: 0 1em;
+	margin: 1em auto;
 	max-width: var(--content-width);
 	font-family: var(--highlight-font-family);
 	font-stretch: condensed;
@@ -394,7 +398,7 @@ select {
 .main-navigation a {
 	display: block;
 	width: 100%;
-	padding: 0.5em 1em 0.5em 0;
+	padding: 0.5em 0.5em 0.5em 0;
 	text-decoration: none;
 	color: #000;
 }
@@ -418,7 +422,7 @@ select {
 @media (--wide-menu-query) {
 
 	.main-navigation ul li a {
-		padding: 0.4em 0.5em;
+/*		padding: 0.4em 0.5em; */
 	}
 
 	.main-navigation ul li {
@@ -441,7 +445,7 @@ select {
 	/* stylelint-enable */
 
 	.main-navigation ul ul li a {
-		width: 218px;
+		width: calc(218px - 1em);
 		background: none;
 	}
 
@@ -568,14 +572,37 @@ select {
 # Footer
 --------------------------------------------------------------*/
 .site-footer {
-	margin: 1em 0 0;
+	margin-bottom: 1em;
 	padding: 2em 0;
 	font-family: var(--highlight-font-family);
 	font-stretch: condensed;
+	border-top: 1px solid var(--color-header-footer-border);
 }
 
 .site-info {
-	text-align: center;
+	display: grid;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr 1fr;
+	justify-items: center;
+	align-items: center;
+	max-width: 100%;
+}
+
+@media (--content-query) {
+	.site-info {
+		grid-template-columns: 1fr 1fr;
+		grid-template-rows: 1fr;
+
+		& > .copyright {
+			margin-left: 1em;
+			justify-self: start;
+		}
+
+		& > .privacy {
+			margin-right: 1em;
+			justify-self: end;
+		}
+	}
 }
 
 /*--------------------------------------------------------------
