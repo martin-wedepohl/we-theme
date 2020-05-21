@@ -64,12 +64,17 @@ class Component implements Component_Interface {
 				[
 					'name'  => __( 'Primary', 'wp-rig' ),
 					'slug'  => 'theme-primary',
-					'color' => '#e36d60',
+					'color' => '#f00',
 				],
 				[
 					'name'  => __( 'Secondary', 'wp-rig' ),
 					'slug'  => 'theme-secondary',
-					'color' => '#41848f',
+					'color' => '#0007d8',
+				],
+				[
+					'name'  => __( 'Tertiary', 'wp-rig' ),
+					'slug'  => 'theme-tertiary',
+					'color' => '#61ce70',
 				],
 				[
 					'name'  => __( 'Red', 'wp-rig' ),
@@ -94,7 +99,7 @@ class Component implements Component_Interface {
 				[
 					'name'  => __( 'Black', 'wp-rig' ),
 					'slug'  => 'theme-black',
-					'color' => '#1C2833',
+					'color' => '#000',
 				],
 				[
 					'name'  => __( 'Grey', 'wp-rig' ),
@@ -104,17 +109,7 @@ class Component implements Component_Interface {
 				[
 					'name'  => __( 'White', 'wp-rig' ),
 					'slug'  => 'theme-white',
-					'color' => '#ECF0F1',
-				],
-				[
-					'name'  => __( 'Dusty daylight', 'wp-rig' ),
-					'slug'  => 'custom-daylight',
-					'color' => '#97c0b7',
-				],
-				[
-					'name'  => __( 'Dusty sun', 'wp-rig' ),
-					'slug'  => 'custom-sun',
-					'color' => '#eee9d1',
+					'color' => '#fff',
 				],
 			]
 		);

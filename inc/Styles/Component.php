@@ -361,10 +361,7 @@ class Component implements Component_Interface, Templating_Component_Interface {
 			return $this->google_fonts;
 		}
 
-		$google_fonts = [
-			'Roboto Condensed' => [ '400', '400i', '700', '700i' ],
-			'Crimson Text'     => [ '400', '400i', '600', '600i' ],
-		];
+		$google_fonts = [];
 
 		/**
 		 * Filters default Google Fonts.

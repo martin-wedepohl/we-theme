@@ -2,6 +2,62 @@
  * Custom styles for the front-page.php template.
  */
 
+ .main-links {
+	display: grid;
+	justify-items: center;
+	align-items: center;
+	grid-template-columns: 1fr;
+	grid-template-rows: 1fr 1fr 1fr;
+	row-gap: 1em;
+}
+
+.projects a,
+.contact a,
+.resume a {
+	font-size: 1.2em;
+	box-shadow: 30px 45px 5px 0px rgba(0,0,0,.5);
+	font-family: var(--highlight-font-family);
+}
+
+.projects a:hover,
+.contact a:hover,
+.resume a:hover {
+	text-decoration: none;
+	animation: wobble 1s ease-in-out 0s alternate 1;
+}
+
+.projects a {
+	background-color: var(--color-theme-secondary);
+}
+
+.contact a {
+	background-color: var(--color-theme-tertiary);
+}
+
+.resume a {
+	background-color: var(--color-theme-primary);
+}
+
+.projects a:hover {
+	background-color: #0006b3;
+}
+
+.contact a:hover {
+	background-color: #4ca352;
+}
+
+.resume a:hover {
+	background-color: #b30000;
+}
+
+@media (--wide-menu-query) {
+	.main-links {
+		justify-content: space-evenly;
+		grid-template-columns: 1fr 1fr 1fr;
+		grid-template-rows: 1fr;
+	}
+}
+
 @media (--sidebar-query) {
 
 	.site {
@@ -26,4 +82,14 @@
 		border-bottom: none;
 	}
 
+}
+
+@keyframes wobble {
+	0% { transform: rotate(0deg); } 
+	15% { transform: rotate(-10deg); } 
+	30% { transform: rotate(7deg); } 
+	45% { transform: rotate(-7deg); } 
+	60% { transform: rotate(4deg); }
+	75% { transform: rotate(-2deg); }
+	100% { transform: rotate(0deg); }  
 }
